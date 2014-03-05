@@ -3,6 +3,7 @@
 
 from PIL import Image, ImageDraw, ImageFont
 import sys
+import os
 from getpass import getpass
 from datetime import datetime
 import random
@@ -244,8 +245,13 @@ def _generate_data(pwd):
 def write_log(priv_key, address, pwd):
     if DEBUG:
         return
+
+    log_path = "%s/log" % PATH
+    _check_dir(log_path)
+
     encrypted_key = utilit.encrypted(pwd, priv_key)
-    f = open("%s/log/%s.log" % (PATH, time_now().split("_")[0]), "a")
+
+    f = open("%s/%s.log" % (log_path, time_now().split("_")[0]), "a")
     f.write("%s %s %s %s\n" % (time_now(), encrypted_key, address, utilit.str_to_base58(utilit.dhash(utilit.dhash(pwd)))))
     f.close()
 
@@ -268,6 +274,11 @@ def _coordinates_card(x, y, pages):
     for i in pages:
         cc_list.append((cc_xn[pages.index(i)], cc_y))
     return cc_list
+
+
+def _check_dir(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 
 if __name__ == "__main__":
@@ -304,4 +315,7 @@ if __name__ == "__main__":
         else:
             # save
             count_s = "" if sides == 1 else "_%d" % pages.index(page)
+            img_path = "%s/img" % PATH
+            _check_dir(img_path)
+
             page.save("%s/img/%s%s_%d.tiff" % (PATH, time_now(), count_s, pfx), "TIFF")
