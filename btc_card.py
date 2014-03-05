@@ -20,8 +20,7 @@ font = '%s/lib/DejaVuSansCondensed.ttf'
 secret = '9EoV26vC9pxcaJQG3p4QJquowD7h3DPufYGqiZoX4yfZ'
 
 # размеры в пикселях
-# размер листа A4, ориентация альбомная A4 для печати переворачивается как
-# книжная
+# размер листа A4
 paper_size = (2480, 3508)
 sides = 2
 # цвет фона листа белый
